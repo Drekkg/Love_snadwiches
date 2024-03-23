@@ -41,7 +41,7 @@ def validate_data(values):
     checks to see if the inputted data is in the correct format,
     six comma seperated numbers, 
     Inside the try it will convert strings to ints and raise an error if 
-    it cant.
+    it cant. The loop will request data till valid
     """
     try:
         [int(value) for value in values]
@@ -55,5 +55,22 @@ def validate_data(values):
 
     return True
 
+
+def update_sales_worksheet(data):
+    """
+    update sales worksheet and add new row with the data list provided
+    """
+    print("Updating sales worksheet .....\n")
+    sales_worksheet = SHEET.worksheet("sales")
+    sales_worksheet.append_row(data)
+    print("Sales worksheet updated successfully\n")
+
+
+
+
 data = get_sales_data()
-print(data)
+sales_data = [int(num) for num in data]
+
+
+update_sales_worksheet(sales_data)
+
