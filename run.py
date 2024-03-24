@@ -15,7 +15,7 @@ SHEET = GSPREAD_CLIENT.open("love_sandwiches")
 
 
 def get_sales_data():
-    while True:
+    # while True:
         """
         Get sales input data from the user
         """
@@ -23,15 +23,16 @@ def get_sales_data():
         print("Data should be six numbers, seperated by a comma.")
         print("Example: 10, 20, 33, 46, 60, 70")
 
-        data_str = input("Enter your data here: ")
+        # data_str = input("Enter your data here: ")
         
-        sales_data = data_str.split(",")
+        # sales_data = data_str.split(",")
 
-        if validate_data(sales_data):
-            print("Data is valid.")
-            break
+        # if validate_data(sales_data):
+        #     print("Data is valid.")
+        #     break
+        sales_data = [12, 33, 55, 32, 12, 18]  
 
-    return sales_data   
+        return sales_data   
 
 
 
@@ -79,8 +80,13 @@ def calculate_surplus_data(sales_row):
     print("Calculating the surplus.....")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    pprint(stock_row)
+    surplus_data = []
+    for stock, sales in zip(stock_row, sales_row):
+        surplus = int(stock) - sales
+        surplus_data.append(surplus)
 
+
+    return surplus_data
 
 
 
@@ -93,7 +99,8 @@ def main():
     data = get_sales_data()
     sales_data = [int(num) for num in data]
     update_sales_worksheet(sales_data)
-    calculate_surplus_data(sales_data)
+    new_suplus_data = calculate_surplus_data(sales_data)
+    print(new_suplus_data)
 
 
 
