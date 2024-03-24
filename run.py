@@ -57,31 +57,20 @@ def validate_data(values):
 
     return True
 
-
-def update_sales_worksheet(data):
+def update_worksheet(data, worksheet):
     """
-    update sales worksheet and add new row with the data list provided
-    """
-    print("Updating sales worksheet .....\n")
-    sales_worksheet = SHEET.worksheet("sales")
-    sales_worksheet.append_row(data)
-    print("Sales worksheet updated successfully\n")
-
-def update_surplus_worksheet(surplus_row):
-    """
-    updates the surplus worksheet row with the surplus data 
-    how many sandwiches were made and how many were wasted 
+    receives data to update relevant worksheet.
+      how many sandwiches were made and how many were wasted 
      - A negative number indicates that extra sandwiches were made
         after the stock was sold out
-      . A positive number indicates wastage
-     """
-    print("Updating sales worksheet........\n")
-    surplus_worksheet = SHEET.worksheet("surplus")
-    surplus_worksheet.append_row(surplus_row)
+     - A positive number indicates wastage
+    """
     
-    print("Surplus worksheet updated successfully\n")
-
-
+    print(f"Updating {worksheet} worksheet .....\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} worksheet updated successfully!\n")
+    
 
 
 def calculate_surplus_data(sales_row):
@@ -114,9 +103,9 @@ def main():
     """
     data = get_sales_data()
     sales_data = [int(num) for num in data]
-    update_sales_worksheet(sales_data)
+    update_worksheet(sales_data, "sales" )
     new_surplus_data = calculate_surplus_data(sales_data)
-    update_surplus_worksheet(new_surplus_data)
+    update_worksheet(new_surplus_data, "surplus")
 
 
 
